@@ -13,21 +13,37 @@ Next.js 16（App Router）/ React 19 / TypeScript で実装。
 
 ```bash
 # 前提: Node.js 22 LTS（最低 20.9+）/ npm
-
+ 
 # 1. 依存のインストール
 npm install
-
+ 
 # 2. 環境変数の設定（GitHubトークン）
 #    .env.example をコピーして GITHUB_TOKEN を設定
 #    ※ トークン未設定でも動作するが、レート制限が厳しくなる（検索 10req/分）
 cp .env.example .env.local
-
+ 
 # 3. 開発サーバー起動
 npm run dev
-
+ 
 # テスト実行
 npm test
 ```
+
+### GitHub アクセストークンの取得方法
+
+公開リポジトリの検索・取得のみのため、**追加の権限（スコープ）は一切不要**です。
+
+1. GitHub にログインし、[Personal access tokens (classic)](https://github.com/settings/tokens) を開く
+   （画面からたどる場合: 右上アイコン → **Settings** → 左メニュー最下部 **Developer settings** → **Personal access tokens** → **Tokens (classic)**）
+2. **Generate new token (classic)** をクリック
+3. **Note** に用途（例: `repo-finder`）を入力し、**Expiration** は任意（30日程度を推奨）
+4. **スコープのチェックボックスはすべて未チェックのまま**にする（公開情報の読み取りに権限は不要。最小権限の原則）
+5. **Generate token** をクリックし、表示されたトークン（`ghp_` で始まる文字列）をコピー
+   ※ トークンはこの画面でしか表示されないため、閉じる前に必ずコピーする
+6. `.env.local` の `GITHUB_TOKEN=` の後ろに貼り付ける
+
+> Fine-grained tokens でも動作するが、本アプリは公開情報のみのため classic の無スコープで十分。
+> トークンは `.env.local`（gitignore 済み）にのみ置き、コミットしないこと。
 
 <!-- TODO: scaffold後、実際のコマンド・envキー名と一致しているか確認して確定 -->
 
