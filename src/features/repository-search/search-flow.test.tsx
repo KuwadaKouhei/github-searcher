@@ -1,9 +1,8 @@
-import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterEach, afterAll } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 import { SearchResults } from "./components/search-results";
-import { vi } from "vitest";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
@@ -44,5 +43,31 @@ describe("検索フロー（結合）", () => {
     );
     render(await SearchResults({ query: "zzz", page: 1 }));
     expect(screen.getByText(/0\s*件/)).toBeInTheDocument();
+  });
+
+  it("sort/order が検索APIのリクエストに反映される", async () => {
+    let capturedUrl = "";
+    server.use(
+      http.get("https://api.github.com/search/repositories", ({ request }) => {
+        capturedUrl = request.url;
+        return HttpResponse.json({ total_count: 0, incomplete_results: false, items: [] });
+      })
+    );
+    render(await SearchResults({ query: "react", page: 1, sort: "stars", order: "desc" }));
+    const sent = new URL(capturedUrl);
+    expect(sent.searchParams.get("sort")).toBe("stars");
+    expect(sent.searchParams.get("order")).toBe("desc");
+  });
+
+  it("不正な sort 値は API に渡さない", async () => {
+    let capturedUrl = "";
+    server.use(
+      http.get("https://api.github.com/search/repositories", ({ request }) => {
+        capturedUrl = request.url;
+        return HttpResponse.json({ total_count: 0, incomplete_results: false, items: [] });
+      })
+    );
+    render(await SearchResults({ query: "react", page: 1, sort: "evil" }));
+    expect(new URL(capturedUrl).searchParams.get("sort")).toBeNull();
   });
 });
