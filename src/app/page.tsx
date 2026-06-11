@@ -1,15 +1,18 @@
-import { searchRepositories } from "@/lib/github/client";
-import { RepositoryList } from "@/features/repository-search/components/repository-list";
 import { SearchBox } from "@/features/repository-search/components/search-box";
-import { Pagination } from "@/features/repository-search/components/pagination";
+import { SortControl } from "@/features/repository-search/components/sort-control";
 import { SearchResults } from "@/features/repository-search/components/search-results";
 
 type Props = {
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{
+    q?: string;
+    page?: string;
+    sort?: string;
+    order?: string;
+  }>;
 };
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q, page } = await searchParams;
+  const { q, page, sort, order } = await searchParams;
   const query = q?.trim();
   const currentPage = Math.max(1, Number(page) || 1);
 
@@ -23,7 +26,12 @@ export default async function SearchPage({ searchParams }: Props) {
             キーワードを入力してGitHubリポジトリを検索してください
           </p>
         ) : (
-          <SearchResults query={query} page={currentPage} />
+          <SearchResults
+            query={query}
+            page={currentPage}
+            sort={sort}
+            order={order}
+          />
         )}
       </div>
     </main>
