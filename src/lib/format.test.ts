@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCompact } from './format';
+import { formatCompact, formatDate } from './format';
 
 describe('formatCompact', () => {
   it('1000未満はそのまま表示する', () => {
@@ -16,5 +16,16 @@ describe('formatCompact', () => {
 
   it('0 を表示できる', () => {
     expect(formatCompact(0)).toBe('0');
+  });
+});
+
+describe('formatDate', () => {
+  it('ISO 文字列を YYYY/MM/DD 表記に整形する', () => {
+    expect(formatDate('2026-06-10T12:00:00Z')).toBe('2026/06/10');
+  });
+
+  it('空文字や不正値は空文字を返す', () => {
+    expect(formatDate('')).toBe('');
+    expect(formatDate('not-a-date')).toBe('');
   });
 });
