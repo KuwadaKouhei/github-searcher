@@ -23,6 +23,8 @@ const rawDetail = {
   watchers_count: 70274,   // Star数のエイリアス（罠）
   subscribers_count: 2667, // 真のWatcher数
   forks_count: 9800, open_issues_count: 520,
+  topics: ["ui"], license: { spdx_id: "MIT", name: "MIT License" },
+  pushed_at: "2026-06-10T12:00:00Z",
 };
 
 describe("詳細フロー（結合）", () => {
@@ -38,7 +40,7 @@ describe("詳細フロー（結合）", () => {
       })
     );
     expect(
-      screen.getByRole("heading", { name: "facebook/react" })
+      screen.getByRole("heading", { name: "react" })
     ).toBeInTheDocument();
     expect(screen.getByText("2.7K")).toBeInTheDocument();
   });
