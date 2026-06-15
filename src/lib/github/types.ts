@@ -11,6 +11,10 @@ export type GitHubRepoRaw = {
   subscribers_count?: number; // 真のWatcher数。検索結果には含まれない場合がある
   forks_count: number;
   open_issues_count: number;
+  topics?: string[]; // 検索結果でも返るが、欠損時は [] にフォールバック
+  license?: { spdx_id: string | null; name: string | null } | null;
+  pushed_at?: string; // 最終 push 日時（更新日として使用）
+  updated_at?: string; // メタデータ更新日時（pushed_at が無い場合のフォールバック）
 };
 
 export type GitHubSearchResponseRaw = {

@@ -1,4 +1,4 @@
-import { SearchX } from "lucide-react";
+import { Search } from "lucide-react";
 
 type Props = {
   query: string;
@@ -6,13 +6,15 @@ type Props = {
 
 export function EmptyState({ query }: Props) {
   return (
-    <div className="flex flex-col items-center gap-3 py-16 text-center">
-      <SearchX aria-hidden className="size-10 text-muted-foreground" />
-      <p className="text-muted-foreground">
-        「{query}」に一致するリポジトリが見つかりませんでした
+    <div className="animate-pop-in py-20 text-center">
+      <div className="empty-icon mx-auto mb-[22px] grid size-[76px] place-items-center rounded-[22px] bg-[var(--brand-soft)] text-[var(--brand-strong)]">
+        <Search className="size-8" />
+      </div>
+      <p className="mb-2 text-xl font-bold">
+        「{query}」に一致するリポジトリは存在しません
       </p>
-      <p className="text-sm text-muted-foreground">
-        キーワードを変えて検索してみてください
+      <p className="text-[15px] text-muted-foreground">
+        キーワードを変えて、もう一度お試しください。
       </p>
     </div>
   );

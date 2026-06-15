@@ -13,31 +13,40 @@ const buildDetail = (
   ownerAvatarUrl: "https://avatars.githubusercontent.com/u/69631",
   language: "JavaScript",
   stars: 70274,
-  description: "A library for building UI",
-  watchers: 2667,
   forks: 9800,
   openIssues: 520,
+  description: "A library for building UI",
+  topics: ["ui", "frontend"],
+  watchers: 2667,
   htmlUrl: "https://github.com/facebook/react",
+  license: "MIT",
+  updatedAt: "2026-06-10T12:00:00Z",
   ...overrides,
 });
 
 describe("RepositoryDetail", () => {
-  it("7項目（名前・言語・Star/Watcher/Fork/Issue・アイコン）を表示する", () => {
+  it("オーナー・名前・言語・4つのスタットを表示する", () => {
     render(<RepositoryDetail repository={buildDetail()} />);
-    expect(
-      screen.getByRole("heading", { name: "facebook/react" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "react" })).toBeInTheDocument();
+    expect(screen.getByText("facebook")).toBeInTheDocument();
     expect(screen.getByText("JavaScript")).toBeInTheDocument();
-    expect(screen.getByText("Stars")).toBeInTheDocument();
-    expect(screen.getByText("Watchers")).toBeInTheDocument();
-    expect(screen.getByText("Forks")).toBeInTheDocument();
-    expect(screen.getByText("Issues")).toBeInTheDocument();
+    expect(screen.getByText("Star")).toBeInTheDocument();
+    expect(screen.getByText("Watcher")).toBeInTheDocument();
+    expect(screen.getByText("Fork")).toBeInTheDocument();
+    expect(screen.getByText("Issue")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "facebook" })).toBeInTheDocument();
   });
 
   it("Watcher数として watchers の値が表示される", () => {
     render(<RepositoryDetail repository={buildDetail({ watchers: 2667 })} />);
     expect(screen.getByText("2.7K")).toBeInTheDocument();
+  });
+
+  it("ライセンス・トピックを表示する", () => {
+    render(<RepositoryDetail repository={buildDetail()} />);
+    expect(screen.getByText("MIT")).toBeInTheDocument();
+    expect(screen.getByText("ui")).toBeInTheDocument();
+    expect(screen.getByText("frontend")).toBeInTheDocument();
   });
 
   it("language が null のとき「言語情報なし」を表示する", () => {

@@ -16,12 +16,14 @@ export default async function RepositoryDetailPage({ params }: Props) {
     repository = await getRepository(owner, repo);
   } catch (error) {
     if (error instanceof NotFoundError) notFound();
-    throw error; // その他のエラーは error.tsx（タスク19）に委ねる
+    throw error; // その他のエラーは error.tsx に委ねる
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
-      <BackLink />
+    <main className="mx-auto max-w-[920px] px-6 pb-28">
+      <div className="animate-float-in pt-7 pb-2">
+        <BackLink />
+      </div>
       <RepositoryDetail repository={repository} />
     </main>
   );
