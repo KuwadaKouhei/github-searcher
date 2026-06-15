@@ -22,7 +22,7 @@ test('検索から詳細閲覧までのハッピーパス', async ({ page }) => 
   await expect(page.getByText('Fork', { exact: true })).toBeVisible();
   await expect(page.getByText('Issue', { exact: true })).toBeVisible();
 
-  // 「検索に戻る」で一覧へ戻る
-  await page.getByRole('button', { name: /トップページへ戻る|検索に戻る/ }).click();
+  // 「戻る」で一覧へ戻る
+  await page.getByRole('button', { name: '前のページに戻る' }).click();
   await expect(page.getByRole('list').getByRole('link').first()).toBeVisible();
 });
