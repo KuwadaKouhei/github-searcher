@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Zen_Kaku_Gothic_New } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { MotionReady } from "@/components/layout/motion-ready";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+});
+
+const zenKaku = Zen_Kaku_Gothic_New({
+  variable: "--font-zen-kaku",
+  weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -25,8 +34,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} ${zenKaku.variable} antialiased`}
+      >
+        <ThemeProvider>
+          <MotionReady />
+          <div className="app-bg" aria-hidden />
+          <div className="relative z-[1] flex min-h-dvh flex-col">
+            <SiteHeader />
+            <div className="flex-1">{children}</div>
+            <SiteFooter />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
