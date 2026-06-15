@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
+    // E2E（Playwright）は別ランナーで実行するため Vitest の対象から除外する。
+    // exclude を指定するとデフォルト除外が上書きされるため node_modules も明示する。
+    exclude: ['**/node_modules/**', '**/e2e/**'],
   },
   resolve: {
     alias: {
