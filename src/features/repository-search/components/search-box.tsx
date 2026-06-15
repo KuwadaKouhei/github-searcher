@@ -54,7 +54,7 @@ export function SearchBox() {
       <button
         type="submit"
         disabled={isPending}
-        className="inline-flex h-[58px] shrink-0 items-center gap-2 rounded-xl bg-primary px-[26px] text-base font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition-[transform,filter] duration-200 ease-[var(--ease-spring)] hover:brightness-[1.07] active:scale-[0.96] disabled:opacity-60"
+        className="inline-flex h-[58px] shrink-0 items-center gap-2 rounded-xl bg-primary px-[26px] text-base font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition-[transform,filter] duration-200 ease-[var(--ease-spring)] hover:brightness-[1.07] active:scale-[0.96] disabled:opacity-60 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <Search aria-hidden className="size-[18px]" />
         {isPending ? "検索中…" : "検索"}
